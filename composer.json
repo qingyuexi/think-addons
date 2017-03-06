@@ -5,7 +5,6 @@
     "homepage": 		"https://github.com/qingyuexi/think-addons",
     "license": 			"Apache-2.0",
     "minimum-stability": "stable",
-    "version": 			"1.0.0",
     "authors": [{
         "name":         "qingyuexi",
         "email":        "1604583867@qq.com",
