@@ -4,7 +4,7 @@
     "keywords":         ["addons", "think-addons", "tp5-addons","qingyuexi-addons","thinkphp5"],
     "homepage": 		"https://github.com/qingyuexi/think-addons",
     "license": 			"Apache-2.0",
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "authors": [{
         "name":         "qingyuexi",
         "email":        "1604583867@qq.com",
