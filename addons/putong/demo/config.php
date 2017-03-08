@@ -8,7 +8,12 @@
 // +----------------------------------------------------------------------
 // | Author: Byron Sampson <xiaobo.sun@qq.com>
 // +----------------------------------------------------------------------
-
 return [
-    'addons_on' => true
+    'name' => 'demo',
+    'title' => 'demo',
+    'description' => 'demo插件',
+    'status' => 1,
+    'url' => true,
+    'author' => '清月曦',
+    'version' => '0.1'
 ];
