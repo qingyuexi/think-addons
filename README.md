@@ -135,9 +135,9 @@ return [
 如果插件中需要有链接或提交数据的业务，可以在插件中创建controller业务文件，
 要访问插件中的controller时使用addon_url生成url链接。
 如下：
-<a href="{:addon_url('putong://putong/admin/index')}">link demo</a>
+<a href="{:addon_url('putong://demo/admin/index')}">link demo</a>
 格式为：
-putong为插件名，admin为controller中的类名，index为controller中的方法
+demo为插件名，admin为controller中的类名，index为controller中的方法
 ```
 
 ### 创建插件的controller文件
