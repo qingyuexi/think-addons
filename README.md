@@ -18,7 +18,7 @@ The ThinkPHP5 Addons Package
 <?php
 return [
 	// 可以定义多个钩子
-    'testhook'=>'addons\putong\demo\demo' // 键为钩子名称，用于在业务中自定义钩子处理，值为实现该钩子的插件，
+    'testhook'=>'putong\demo\demo' // 键为钩子名称，用于在业务中自定义钩子处理，值为实现该钩子的插件，
 					// 多个插件可以用数组也可以用逗号分割
 ]
 ```
