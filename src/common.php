@@ -147,7 +147,7 @@ function addon_url($url, $param = [], $suffix = true, $domain = false)
 
     return url("/addons/{$v}/{$actions}", $param, $suffix, $domain);
 }
-
+// 复制文件到新目录
 function recurse_copy($src,$dst) { // 原目录，复制到的目录
     $dir = opendir($src);
     @mkdir($dst, 0777, true);
@@ -161,4 +161,93 @@ function recurse_copy($src,$dst) { // 原目录，复制到的目录
         }
     }
     closedir($dir);
+}
+// 应用公共文件
+//获取文件目录列表,该方法返回数组
+function getDir($dir)
+{
+    $dirArray[] = NULL;
+    if (false != ($handle = opendir($dir))) {
+        $i = 0;
+        while (false !== ($file = readdir($handle))) {
+            //去掉"“.”、“..”以及带“.xxx”后缀的文件
+            if ($file != "." && $file != ".." && !strpos($file, ".") && $file != '.DS_Store') {
+                $dirArray[$i] = $file;
+                $i++;
+            }
+        }
+        //关闭句柄
+        closedir($handle);
+    }
+    return $dirArray;
+}
+
+
+/**
+ * 保存模块配置
+ * @param string $file 调用文件
+ * @return array
+ */
+function save_config($file, $config)
+{
+    if (empty($config) || !is_array($config)) {
+        return array();
+    }
+    $file = get_config_file($file);
+    $conf = "<?php 
+return [ \n";
+    foreach ($config as $key => $value) {
+        if (is_string($value) && !in_array($value, array('true', 'false'))) {
+            if (!is_numeric($value)) {
+                $value = "'" . $value . "'"; //如果是字符串，加上单引号
+            }
+        }
+        $conf = $conf."    '" . $key . "'=>" . $value . ",\n";
+    }
+    $conf = $conf.'];';
+
+    //写入应用配置文件
+    if (!is_writable($file)) {
+        return false;
+    } else {
+        if (file_put_contents($file, $conf)) {
+            return true;
+        } else {
+            return false;
+        }
+        return '';
+    }
+}
+
+/**
+ * 解析配置文件路径
+ * @param string $file 文件路径或简写路径
+ * @return dir
+ */
+function get_config_file($file)
+{
+    $name = $file;
+    if (!is_file($file)) {
+        $str = explode('/', $file);
+        $strCount = count($str);
+        switch ($strCount) {
+            case 1:
+                $app = APP_NAME;
+                $name = $str[0];
+                break;
+            case 2:
+                $app = $str[0];
+                $name = $str[1];
+                break;
+        }
+        $app = strtolower($app);
+        if (empty($app) && empty($file)) {
+            throw new \Exception("Config '{$file}' not found'", 500);
+        }
+        $file = APP_PATH . "{$app}/conf/{$name}.php";
+        if (!file_exists($file)) {
+            throw new \Exception("Config '{$file}' not found", 500);
+        }
+    }
+    return $file;
 }
