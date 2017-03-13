@@ -251,3 +251,33 @@ function get_config_file($file)
     }
     return $file;
 }
+
+//内置插件助手函数
+function x_model($name)
+{
+    $x_route = request()->route();
+    // $namespace = 'addons\\'.$x_route['v'].'\\'.$x_route['addon'].'\\model\\'.$name;
+    
+    $model = '';
+    $item = getDir(ADDON_PATH);
+    if($item){
+        foreach ($item as $key => $value) {
+            $addons = getDir(ADDON_PATH.$value);
+            foreach ($addons as $k => $v) {
+                $namespace = 'addons\\'.$value.'\\'.$v.'\\model\\'.$name;
+                if(class_exists($namespace)){
+                    $model = model($namespace);
+                }
+            }
+        }
+    }
+    if(!$model){
+        $model = model('app\common\model\\'.$name);
+    }
+    return $model;
+}
+
+
+
+
+
