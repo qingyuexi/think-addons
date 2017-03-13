@@ -31,7 +31,7 @@ if (!is_dir(ADDON_PATH)) {
 // 闭包初始化行为
 Hook::add('action_begin', function () {
     // 获取系统配置
-    $data = \think\Config::get('app_debug') ? [] : cache('hooks');
+    $data = \think\Config::get('app_debug') ? [] : cache('addons_hooks');
     $addons = (array)Config::get('addons');
     if (empty($data)) {
         // 初始化钩子
@@ -47,7 +47,7 @@ Hook::add('action_begin', function () {
 
             \think\Hook::add($key, $addons[$key]);
         }
-        cache('hooks', $addons);
+        cache('addons_hooks', $addons);
     } else {
         Hook::import($data, false);
     }
@@ -60,7 +60,7 @@ Hook::add('action_begin', function () {
  * @param mixed $params 传入参数
  * @return void
  */
-function hook($hook, $params = [])
+function addons_hook($hook, $params = [])
 {
     \think\Hook::listen($hook, $params);
 }
